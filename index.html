@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Levi McNeely</title>
+<meta name="description" content="Levi McNeely — grid technology planning for electric cooperatives, Herd Co. sites and apps, Bluff Road Bike Co, and a long list of endurance races.">
+<meta property="og:title" content="Levi McNeely">
+<meta property="og:description" content="Smart grid advisor at NRTC. Builder at Herd Co. Owner of Bluff Road Bike Co. Still racing.">
+<meta property="og:url" content="https://levimcneely.com/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14202b; --ink-2:#3b4a57; --muted:#5f6d78;
+    --paper:#eef1f0; --sheet:#ffffff; --line:#cfd6d9;
+    --signal:#e9bd37;           /* bus bar / Indiana gold */
+    --grid:#1e5a8a;             /* career */
+    --herd:#163823;             /* Herd Co. */
+    --brbc:#021f45; --brbc-red:#a70d37; /* Bluff Road */
+    --wide: "wdth" 125; --narrow: "wdth" 75;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Archivo",system-ui,sans-serif;font-size:17px;line-height:1.55}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--signal);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+
+  /* ---------- top bar ---------- */
+  .top{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+  .mark{font-weight:800;font-variation-settings:var(--wide);letter-spacing:.02em;text-decoration:none;font-size:18px}
+  .apps{display:flex;gap:22px;font-size:15px}
+  .apps a{text-decoration:none;color:var(--ink-2)}
+  .apps a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:56px 0 0}
+  .hero h1{margin:0;font-weight:800;font-variation-settings:var(--wide);font-size:clamp(46px,8.4vw,112px);line-height:.92;letter-spacing:-.01em}
+  .hero p{margin:22px 0 0;max-width:34ch;font-size:clamp(19px,2.1vw,24px);color:var(--ink-2);line-height:1.4}
+
+  /* ---------- the bus: one-line diagram feeding three sections ---------- */
+  .feeders{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:72px;padding-top:44px}
+  .bus{position:absolute;top:0;left:0;right:0;height:5px;background:var(--signal);transform-origin:left;animation:energize .9s cubic-bezier(.6,.05,.3,1) both}
+  .bus::before,.bus::after{content:"";position:absolute;top:-7px;width:5px;height:19px;background:var(--signal)}
+  .bus::before{left:0}.bus::after{right:0}
+  .feeder{position:relative;background:var(--sheet);border:1px solid var(--line);border-top:6px solid var(--c);padding:28px 26px 26px;display:flex;flex-direction:column}
+  .feeder::before{content:"";position:absolute;left:34px;top:-50px;width:3px;height:44px;background:var(--signal);transform-origin:top;animation:drop .35s ease-out both;animation-delay:calc(.75s + var(--i)*.12s)}
+  .feeder::after{content:"";position:absolute;left:28px;top:-31px;width:15px;height:15px;background:var(--paper);border:3px solid var(--ink);animation:fade .3s both;animation-delay:calc(.85s + var(--i)*.12s)}
+  @keyframes energize{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes drop{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+
+  .feeder .head{display:flex;align-items:center;gap:14px;min-height:58px}
+  .feeder .head img{width:52px;height:52px;object-fit:contain;flex:none}
+  .feeder h2{margin:0;font-variation-settings:var(--wide);font-weight:800;font-size:25px;line-height:1.05;color:var(--c)}
+  .feeder .role{margin:4px 0 0;font-size:14.5px;color:var(--muted);line-height:1.3}
+  .feeder .lede{margin:20px 0 18px;font-size:17px}
+  .feeder h3{margin:22px 0 8px;font-size:13.5px;font-weight:700;color:var(--c);letter-spacing:.01em}
+  .feeder ul{margin:0;padding:0;list-style:none}
+  .feeder li{padding:7px 0;border-top:1px solid #e6eaec;font-size:15.5px;line-height:1.4}
+  .feeder li:last-child{border-bottom:1px solid #e6eaec}
+  .feeder li b{font-weight:650;display:block}
+  .feeder li span{color:var(--muted);font-size:14.5px}
+  .price{float:right;color:var(--ink-2);font-variant-numeric:tabular-nums;font-size:14.5px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+  .chips span{font-size:13.5px;padding:3px 9px;border:1px solid var(--line);border-radius:20px;color:var(--ink-2)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px}
+  .steps div{background:color-mix(in srgb,var(--c) 7%,white);padding:9px 10px;font-size:14px;line-height:1.3}
+  .steps b{display:block;font-size:15px}
+  .go{margin-top:auto;padding-top:24px;display:flex;flex-wrap:wrap;gap:10px}
+  .btn{display:inline-block;text-decoration:none;font-weight:650;font-size:15.5px;padding:11px 16px;background:var(--c);color:#fff;border:2px solid var(--c)}
+  .btn.ghost{background:transparent;color:var(--c)}
+  .btn:hover{filter:brightness(1.15)}
+  .btn.ghost:hover{background:color-mix(in srgb,var(--c) 8%,transparent);filter:none}
+
+
+  /* ---------- career detail ---------- */
+  .path{margin:84px 0 0;display:grid;grid-template-columns:220px 1fr;gap:28px;align-items:start;scroll-margin-top:20px}
+  .path h2{margin:0;font-variation-settings:var(--wide);font-weight:800;font-size:30px;line-height:1.05}
+  .path .note{margin:10px 0 0;color:var(--muted);font-size:15px}
+  .roles{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+  .roles li{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .roles .yrs{font-variant-numeric:tabular-nums;color:var(--grid);font-size:15px;padding-top:1px}
+  .roles .t{color:var(--muted);font-size:15px}
+  .roles .t b{display:block;color:var(--ink);font-weight:650;font-size:16.5px}
+  .roles li:first-child .yrs{font-weight:700}
+  .beyond{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px}
+  .beyond h3{margin:0 0 8px;font-size:14px;font-weight:700;color:var(--grid)}
+  .beyond ul{margin:0;padding:0;list-style:none}
+  .beyond li{padding:7px 0;border-top:1px solid var(--line);font-size:15px;color:var(--ink-2);line-height:1.4}
+
+  /* ---------- side apps ---------- */
+  .side{margin:84px 0 0;display:grid;grid-template-columns:220px 1fr;gap:28px;align-items:start}
+  .side h2,.endure h2{margin:0;font-variation-settings:var(--wide);font-weight:800;font-size:30px;line-height:1.05}
+  .side .note{margin:10px 0 0;color:var(--muted);font-size:15px}
+  .applist{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink)}
+  .applist a{display:block;text-decoration:none;padding:18px 20px 20px 0;border-bottom:1px solid var(--line)}
+  .applist a + a{padding-left:20px;border-left:1px solid var(--line)}
+  .applist strong{display:block;font-size:19px;font-variation-settings:var(--wide);font-weight:750}
+  .applist .url{font-size:14px;color:var(--grid)}
+  .applist p{margin:8px 0 0;font-size:15.5px;color:var(--ink-2)}
+  .applist a:hover strong{text-decoration:underline;text-underline-offset:4px}
+
+  /* ---------- endurance ---------- */
+  .endure{margin-top:96px;background:var(--ink);color:#e8edf0;padding:80px 0 88px}
+  .endure h2{color:#fff;font-size:clamp(40px,6vw,76px)}
+  .endure .intro{max-width:46ch;margin:16px 0 0;color:#b8c4cc;font-size:18.5px}
+  .e-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:64px;margin-top:56px}
+  .e-grid h3{margin:0 0 6px;font-size:15px;font-weight:700;color:var(--signal)}
+  .tally{list-style:none;margin:0 0 34px;padding:0}
+  .tally li{display:grid;grid-template-columns:64px 1fr;align-items:baseline;padding:9px 0;border-bottom:1px solid #2c3a46}
+  .tally .n{font-variation-settings:var(--wide);font-weight:800;font-size:26px;color:#fff;font-variant-numeric:tabular-nums}
+  .tally .n.dash{color:#6e7f8c}
+  .log{list-style:none;margin:0;padding:0;position:relative}
+  .log::before{content:"";position:absolute;left:66px;top:8px;bottom:8px;width:2px;background:#2c3a46}
+  .log li{display:grid;grid-template-columns:52px 30px 1fr;align-items:baseline;padding:6px 0}
+  .log .yr{font-variant-numeric:tabular-nums;color:#8fa0ad;font-size:15px}
+  .log .dot{width:10px;height:10px;border-radius:50%;background:var(--signal);justify-self:center;align-self:center;position:relative;z-index:1}
+  .log .ev{color:#fff;font-size:17px}
+  .log .ev small{color:#8fa0ad;font-size:14.5px;margin-left:6px}
+  .log li.dnf .dot{background:var(--ink);border:2px solid #8fa0ad}
+  .log li.now .dot{box-shadow:0 0 0 5px rgba(233,189,55,.25)}
+  .e-foot{margin-top:28px;font-size:15.5px;color:#b8c4cc}
+  .e-foot a{color:var(--signal)}
+
+  /* ---------- footer (Herd Co. standard) ---------- */
+  footer{padding:30px 0 40px;font-size:14px;color:var(--muted)}
+  footer .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  footer img{width:30px;height:auto}
+  footer a{color:var(--ink-2)}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .feeders{grid-template-columns:1fr;gap:34px;padding-top:0;margin-top:52px;padding-left:26px}
+    .bus{top:0;bottom:0;right:auto;width:5px;height:auto;transform-origin:top;animation-name:energizeV}
+    .bus::before,.bus::after{display:none}
+    .feeder::before{left:-21px;top:40px;width:21px;height:3px;transform-origin:left;animation-name:dropH}
+    .feeder::after{left:-14px;top:34px}
+    .side,.path{grid-template-columns:1fr}
+    .e-grid{grid-template-columns:1fr;gap:40px}
+  }
+  @keyframes energizeV{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  @keyframes dropH{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @media (max-width:640px){
+    body{font-size:16px}
+    .wrap{padding:0 18px}
+    .apps{gap:14px;font-size:14px}
+    .hero{padding-top:32px}
+    .applist{grid-template-columns:1fr}
+    .applist a + a{padding-left:0;border-left:0}
+    .feeder{padding:24px 20px}
+    .steps{grid-template-columns:1fr}
+    .beyond{grid-template-columns:1fr}
+    .roles li{grid-template-columns:1fr;gap:2px}
+  }
+  @media (max-width:420px){ .apps{gap:12px;font-size:13.5px} .mark{font-size:16px} }
+  @media (prefers-reduced-motion:reduce){ *,*::before,*::after{animation:none!important} }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="/">LM</a>
+    <nav class="apps" aria-label="Projects">
+      <a href="/scoreboard/">Scoreboard</a>
+      <a href="/highpoints/">Highpoints</a>
+      <a href="/gatecheck/">Gate Check</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Levi<br>McNeely</h1>
+    <p>Electrical engineer planning grid technology for rural electric cooperatives. Builds small, useful software on the side. Fixes bikes. Runs long.</p>
+  </section>
+
+  <div class="feeders">
+    <div class="bus" aria-hidden="true"></div>
+
+    <!-- 1. Career -->
+    <article class="feeder" style="--c:var(--grid);--i:0" aria-labelledby="career">
+      <div class="head">
+        <div>
+          <h2 id="career">Career</h2>
+          <p class="role">Smart Grid Advisory Director at NRTC since 2025</p>
+        </div>
+      </div>
+      <p class="lede">I help electric cooperatives plan their smart grid investments, from where they are today to where their system needs to be, in terms their board and their engineers can both act on.</p>
+
+      <h3>What the work looks like</h3>
+      <ul>
+        <li><b>Technology roadmaps</b><span>Operating data and stakeholder interviews turned into a plan</span></li>
+        <li><b>Business cases</b><span>Financial models that show what an investment costs and returns</span></li>
+        <li><b>Workshops</b><span>Walking co-op leaders through AMI, resiliency, DER and grid intelligence</span></li>
+        <li><b>Deployment support</b><span>Working with NRTC teams and vendors so solutions fit the co-op</span></li>
+      </ul>
+
+      <h3>Education</h3>
+      <ul>
+        <li><b>MBA</b><span>Indiana State University, 2021</span></li>
+        <li><b>B.S., Electrical &amp; Computer Engineering Technology</b><span>Purdue University, 2013</span></li>
+      </ul>
+
+      <div class="go">
+        <a class="btn" href="https://www.linkedin.com/in/lmcneely/" rel="noopener">View LinkedIn</a>
+        <a class="btn ghost" href="#path">Every role</a>
+      </div>
+    </article>
+
+    <!-- 2. Herd Co. -->
+    <article class="feeder" style="--c:var(--herd);--i:1" aria-labelledby="herd">
+      <div class="head">
+        <img src="herd-icon.png" alt="">
+        <div>
+          <h2 id="herd">Herd Co.</h2>
+          <p class="role">Sites, apps, and agents for teams that run lean</p>
+        </div>
+      </div>
+      <p class="lede">Churches, school clubs, HOAs, race teams, coaches and startups get the website, app or AI agent they actually need. It runs on their own accounts, costs close to nothing to keep running, and there's no lock-in.</p>
+
+      <h3>What we build</h3>
+      <ul>
+        <li><b>Event sites</b><span>Retreats, races and school events, with a live schedule that works offline</span></li>
+        <li><b>Group sites</b><span>HOAs, clubs and ministries that volunteers update from a private admin page</span></li>
+        <li><b>Operations tools</b><span>Job tracking, hiring pages and client pipelines that replace spreadsheets</span></li>
+        <li><b>AI agents</b><span>Answer member questions, draft weekly emails, sort applications</span></li>
+      </ul>
+
+      <h3>The basic build</h3>
+      <div class="steps">
+        <div><b>Consult</b>30 min</div>
+        <div><b>Deploy</b>30 min</div>
+        <div><b>Test</b>30 min, then it's yours</div>
+      </div>
+
+      <div class="go">
+        <a class="btn" href="https://herdcoindy.com">Visit herdcoindy.com</a>
+        <a class="btn ghost" href="https://herdcoindy.com/portfolio.html">See the work</a>
+      </div>
+    </article>
+
+    <!-- 3. Bluff Road Bike Co -->
+    <article class="feeder" style="--c:var(--brbc);--i:2" aria-labelledby="brbc">
+      <div class="head">
+        <img src="brbc-bison.png" alt="">
+        <div>
+          <h2 id="brbc">Bluff Road Bike&nbsp;Co</h2>
+          <p class="role">Bike repair in Greenwood, Indiana</p>
+        </div>
+      </div>
+      <p class="lede">The basics, done right and done fast. A by-appointment repair shop with a straight quote before anything gets touched, quick turnaround and no storefront overhead built into the price.</p>
+
+      <h3>Common jobs</h3>
+      <ul>
+        <li>Flat repair &amp; tire swap <span class="price">from $20</span></li>
+        <li>Drivetrain tune <span class="price">from $30</span></li>
+        <li>Brake adjustment <span class="price">from $30</span></li>
+        <li>General tune-up <span class="price">from $40</span></li>
+        <li>Cleaning <span class="price">from $20</span></li>
+      </ul>
+
+      <h3>Bikes we service</h3>
+      <div class="chips">
+        <span>Road</span><span>Gravel</span><span>Tri / TT</span><span>Mountain</span><span>Hybrid</span><span>Kids'</span><span>Cruiser</span>
+      </div>
+
+      <div class="go">
+        <a class="btn" href="https://bluffroadbikeco.com" style="--c:var(--brbc)">Book a repair</a>
+        <a class="btn ghost" href="https://bluffroadbikeco.com/about.html">About the shop</a>
+      </div>
+    </article>
+  </div>
+
+  <section class="path" id="path" aria-labelledby="path-h">
+    <div class="path-intro">
+      <h2 id="path-h">Sixteen years with electric co-ops</h2>
+      <p class="note">From engineering intern to advising co-ops nationwide, at a distribution co-op, a G&amp;T and NRTC.</p>
+    </div>
+    <div>
+      <ol class="roles">
+        <li><span class="yrs">2025–now</span><span class="t"><b>Smart Grid Advisory Director</b>NRTC, remote from Indianapolis</span></li>
+        <li><span class="yrs">2025</span><span class="t"><b>Manager of Engineering and Technical Services</b>Hendricks Power Cooperative</span></li>
+        <li><span class="yrs">2023–2025</span><span class="t"><b>Manager of System Reliability and Operations Technology</b>Hendricks Power Cooperative</span></li>
+        <li><span class="yrs">2021–2023</span><span class="t"><b>Analyst, Power Supply &amp; Portfolio Optimization</b>Wabash Valley Power Alliance</span></li>
+        <li><span class="yrs">2019–2021</span><span class="t"><b>SCADA-EMS System Administrator</b>Wabash Valley Power Alliance</span></li>
+        <li><span class="yrs">2016–2018</span><span class="t"><b>Engineering Services Supervisor</b>CHELCO, DeFuniak Springs, Florida</span></li>
+        <li><span class="yrs">2016</span><span class="t"><b>Engineering Design Supervisor</b>CHELCO</span></li>
+        <li><span class="yrs">2015–2016</span><span class="t"><b>Electrical Engineer II</b>CHELCO</span></li>
+        <li><span class="yrs">2013–2015</span><span class="t"><b>Engineer Technologist</b>Hendricks Power Cooperative</span></li>
+        <li><span class="yrs">2010–2013</span><span class="t"><b>Engineering Intern</b>Hendricks Power Cooperative</span></li>
+      </ol>
+      <div class="beyond">
+        <div>
+          <h3>In the industry</h3>
+          <ul>
+            <li>NRECA Cooperative Engineering Standards Interest Group, 2025</li>
+            <li>IEEE P3434 working group on grid-connected energy storage, voting member, 2024–2025</li>
+            <li>MISO Loss of Load Expectation Working Group, vice chair, 2023</li>
+            <li>InfraGard member, 2019–2025</li>
+            <li>Energy liaison, Walton County Emergency Operations Center, 2015–2017</li>
+          </ul>
+        </div>
+        <div>
+          <h3>In the community</h3>
+          <ul>
+            <li>Chair, JCREMC Operation Round-Up: more than $630,000 granted to Johnson County organizations</li>
+            <li>Leadership Johnson County graduate and board of trustees</li>
+            <li>Leadership Okaloosa graduate</li>
+            <li>Host family, Safe Families for Children Central Indiana</li>
+            <li>Pleasant Grove Elementary Dads Club</li>
+            <li>Eagle Scout</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="side" aria-labelledby="side">
+    <div>
+      <h2 id="side">Side projects</h2>
+      <p class="note">Small apps I built for myself and use most days.</p>
+    </div>
+    <div class="applist">
+      <a href="/scoreboard/">
+        <strong>Scoreboard</strong>
+        <span class="url">levimcneely.com/scoreboard</span>
+        <p>Live scores for my teams and the family's, on one screen.</p>
+      </a>
+      <a href="/highpoints/">
+        <strong>Highpoints</strong>
+        <span class="url">levimcneely.com/highpoints</span>
+        <p>A summit log for the highest point in every U.S. state.</p>
+      </a>
+      <a href="/gatecheck/">
+        <strong>Gate Check</strong>
+        <span class="url">levimcneely.com/gatecheck</span>
+        <p>Ranking every airport I fly through, plus a map of the co-ops I've worked with.</p>
+      </a>
+    </div>
+  </section>
+</div>
+
+<section class="endure" aria-labelledby="ks">
+  <div class="wrap">
+    <h2 id="ks">Keep striving</h2>
+    <p class="intro">Ironman triathlon got me started. Ultras, gravel and mountains kept me going. These days the goal is pulling other people into endurance so they find out what they're capable of.</p>
+
+    <div class="e-grid">
+      <div>
+        <h3>Racing</h3>
+        <ul class="tally">
+          <li><span class="n">2×</span>Ironman finisher</li>
+          <li><span class="n">6×</span>Ironman 70.3 finisher</li>
+          <li><span class="n">2×</span>Wicked Triple age group champion</li>
+          <li><span class="n">2×</span>50-mile finisher</li>
+          <li><span class="n">1×</span>100k finisher</li>
+          <li><span class="n">1×</span>Gravel century finisher</li>
+          <li><span class="n dash">’16</span>USAT Nationals age group qualifier, Olympic triathlon</li>
+        </ul>
+        <h3>Adventure</h3>
+        <ul class="tally">
+          <li><span class="n">300</span>miles backpacked on the Appalachian Trail</li>
+          <li><span class="n">2×</span>Grand Canyon rim-to-rim</li>
+          <li><span class="n dash">50</span><span>State highpoints is the long game. <a href="/highpoints/" style="color:var(--signal)">Follow the summit log</a></span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>One big race a year</h3>
+        <ol class="log">
+          <li><span class="yr">2012</span><span class="dot"></span><span class="ev">Boiler Sprint Tri</span></li>
+          <li><span class="yr">2013</span><span class="dot"></span><span class="ev">Tri Indy <small>Olympic</small></span></li>
+          <li><span class="yr">2014</span><span class="dot"></span><span class="ev">Ironman Muncie 70.3</span></li>
+          <li><span class="yr">2015</span><span class="dot"></span><span class="ev">Ironman Texas</span></li>
+          <li><span class="yr">2016</span><span class="dot"></span><span class="ev">IMTX 70.3 PR <small>+ Wicked Triple Fun Run</small></span></li>
+          <li><span class="yr">2017</span><span class="dot"></span><span class="ev">Bear Bait <small>50 mi</small></span></li>
+          <li><span class="yr">2018</span><span class="dot"></span><span class="ev">Ironman Chattanooga</span></li>
+          <li><span class="yr">2019</span><span class="dot"></span><span class="ev">Chicago Marathon</span></li>
+          <li><span class="yr">2020</span><span class="dot"></span><span class="ev">Pistol Ultra <small>100 mi</small></span></li>
+          <li><span class="yr">2021</span><span class="dot"></span><span class="ev">Rim to Rim, Grand Canyon</span></li>
+          <li class="dnf"><span class="yr">2022</span><span class="dot"></span><span class="ev">Cowboy 200 <small>DNF at mile 43</small></span></li>
+          <li><span class="yr">2023</span><span class="dot"></span><span class="ev">DustBowl 100</span></li>
+          <li><span class="yr">2024</span><span class="dot"></span><span class="ev">Jackalope Jam <small>100k</small></span></li>
+          <li class="dnf"><span class="yr">2025</span><span class="dot"></span><span class="ev">Southern States 100 <small>DNF at mile 43</small></span></li>
+          <li class="now"><span class="yr">2026</span><span class="dot"></span><span class="ev">Prairie on Fire <small>50k</small></span></li>
+        </ol>
+        <p class="e-foot">Next up: The Speed Project, LA to Las Vegas, spring 2027.</p>
+        <h3 style="margin-top:40px">Bringing people along</h3>
+        <ul class="tally">
+          <li><span class="n dash">’15</span>Co-founded Renegade Endurance, a nationwide endurance club with sponsor discounts, race kits and coaching (2015–2019)</li>
+          <li><span class="n dash">’19</span>Race timer for Racemaker Productions, 5Ks to ultras (2019–2024)</li>
+          <li><span class="n dash">’26</span>Operations for Tribal Training, helping everyday men go far through endurance</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="https://herdcoindy.com"><img src="herd-icon.png" alt="Herd Co."></a>
+    <span>&copy; <span id="yr">2026</span> <a href="https://herdcoindy.com">The Herd Co.</a> · Greenwood / Indianapolis, Indiana</span>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear()</script>
+</body>
+</html>
